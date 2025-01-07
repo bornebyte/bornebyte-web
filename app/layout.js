@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="mx-20 my-10">
+          <main className="lg:mx-20 mx-2 my-10">
             {children}
           </main>
         </ThemeProviderComponent>

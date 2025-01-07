@@ -14,3 +14,4 @@ export const handleSaveNewNote = async (title, body, category) => {
         console.log("Inserted notes");
     }
 }
+

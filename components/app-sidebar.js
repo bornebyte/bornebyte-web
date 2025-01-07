@@ -21,7 +21,7 @@ const items = [
     },
     {
         title: "Inbox",
-        url: "#",
+        url: "/admin/inbox",
         icon: Inbox,
     },
     {

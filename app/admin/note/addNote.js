@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRef } from "react"
-import { handleSaveNewNote } from "./api"
+import { handleSaveNewNote } from "./handleSaveNewNote"
 
 export function AddNote() {
     const titleRef = useRef("")

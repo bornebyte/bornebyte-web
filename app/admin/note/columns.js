@@ -21,8 +21,4 @@ export const columns = [
         accessorKey: "date",
         header: "Date",
     },
-    {
-        accessorKey: "hidden",
-        header: "Hidden",
-    },
 ]

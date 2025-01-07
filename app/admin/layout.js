@@ -6,7 +6,7 @@ export default function AdminLayout({ children }) {
         <SidebarProvider>
             <AppSidebar />
             <main>
-                <SidebarTrigger />  
+                <SidebarTrigger className="mb-8" />  
                 {children}
             </main>
         </SidebarProvider>
