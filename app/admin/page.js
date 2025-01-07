@@ -1,7 +1,10 @@
 
 const AdminMainPageComponent = () => {
   return (
-    <div>AdminMainPageComponent</div>
+    <div>
+      Admin
+    </div>
+
   )
 }
 
