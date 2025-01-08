@@ -1,30 +1,19 @@
-import { sql } from "@vercel/postgres";
-import { columns } from "./columns"
-import { DataTable } from "./data-table"
 import { AddNote } from "./addNote";
+import ShowNotes from "./showNotes";
+import { getNotes } from "./handleNotes";
 
-const NoteComponent = async () => {
-  const { rows } = await sql`SELECT * from notes`;
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    return new Intl.DateTimeFormat('en-US', options).format(date);
-  };
-
-  const updatedRows = rows.map((row) => ({
-    ...row,
-    date: formatDate(row.date)
-  }));
-
+const Note = async () => {
+  const notes = await getNotes();
   return (
     <div>
-      <AddNote />
-      <div className="mx-auto py-10">
-        <DataTable columns={columns} data={updatedRows} />
+      <div className="w-full flex justify-end">
+        <AddNote />
+      </div>
+      <div className="mx-auto py-6 w-full md:w-2/3">
+        <ShowNotes notes={notes} />
       </div>
     </div>
   )
 }
 
-export default NoteComponent
+export default Note

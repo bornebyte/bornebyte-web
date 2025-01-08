@@ -1,14 +1,13 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+// import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+// import { AppSidebar } from "@/components/app-sidebar"
+
+import Sidebar from "./Sidebar";
 
 export default function AdminLayout({ children }) {
     return (
-        <SidebarProvider>
-            <AppSidebar />
-            <main>
-                <SidebarTrigger className="mb-8" />
-                {children}
-            </main>
-        </SidebarProvider>
+        <main>
+            <Sidebar />
+            {children}
+        </main>
     )
 }
