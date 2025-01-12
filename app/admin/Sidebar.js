@@ -1,5 +1,5 @@
 "use client"
-import { Home, Inbox, NotebookPen, Search, Settings, Menu, CircleX } from 'lucide-react';
+import { Home, Inbox, NotebookPen, Settings, Menu, CircleX } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
@@ -18,7 +18,6 @@ const Sidebar = () => {
                     <Link href={"/admin"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Home /> Home</Link>
                     <Link href={"/admin/inbox"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Inbox />Inbox</Link>
                     <Link href={"/admin/note"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <NotebookPen /> Notes</Link>
-                    <Link href={"/admin"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Search />Search</Link>
                     <Link href={"/admin/settings"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Settings />Settings</Link>
                 </div>
             </div>

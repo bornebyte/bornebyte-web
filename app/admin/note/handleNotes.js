@@ -25,7 +25,10 @@ export const handleSaveNewNote = async (title, body) => {
         // const categoryArray = category
         //     .split(/(\s+)/)
         //     .filter((e) => e.trim().length > 0);
-        await sql.query(`INSERT INTO notes (title, body, category, date, hidden) VALUES ('${title}', '${body}', 'Null', CURRENT_TIMESTAMP, false)`);
+        const res = await sql.query(`INSERT INTO notes (title, body, category, date, hidden) VALUES ('${title}', '${body}', 'Null', CURRENT_TIMESTAMP, false) returning id`);
+        const insertedID = res.rows[0].id
+        const date = new Date().toLocaleString()
+        await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note Added with id ${insertedID}', '${date}','noteadded','Note added')`);
     } catch (error) {
         console.log(error.message);
     } finally {
@@ -35,7 +38,10 @@ export const handleSaveNewNote = async (title, body) => {
 
 export const handleDeleteNote = async (id) => {
     try {
-        const res = await sql.query(`DELETE FROM notes WHERE id = ${id}`);
+        const res = await sql.query(`DELETE FROM notes WHERE id = ${id} returning id`);
+        const deletedID = res.rows[0].id
+        const date = new Date().toLocaleString()
+        await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note deleted with id ${deletedID}', '${date}','notedeleted','Note deleted')`);
     } catch (error) {
         console.log(error.message);
     }

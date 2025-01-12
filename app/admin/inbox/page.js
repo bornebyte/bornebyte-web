@@ -1,10 +1,13 @@
-import React from 'react'
-// import {table}
+import { getNotifications } from "./action";
+import ShowInbox from "./ShowInbox";
 
-const InboxComponent = () => {
+const Inbox = async () => {
+  const result = await getNotifications();
   return (
-    <div>InboxComponent</div>
+    <div>
+      <ShowInbox result={result[0]} filter={result[1]} />
+    </div>
   )
 }
 
-export default InboxComponent
+export default Inbox
