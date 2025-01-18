@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -44,7 +43,7 @@ export default function SetNewLeftDays() {
     })
 
     async function onSubmit(data) {
-        const res = await addTargetDays(data.targetdate,data.message)
+        const res = await addTargetDays(data.targetdate, data.message)
         if (res != null) {
             toast({
                 title: "Target date added",
@@ -89,11 +88,7 @@ export default function SetNewLeftDays() {
                                                 !field.value && "text-muted-foreground"
                                             )}
                                         >
-                                            {field.value ? (
-                                                format(field.value, "PPP")
-                                            ) : (
-                                                <span>Pick a date</span>
-                                            )}
+                                            <span>Pick a date</span>
                                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                         </Button>
                                     </FormControl>
