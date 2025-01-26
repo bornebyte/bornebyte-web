@@ -6,10 +6,31 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button";
-import { Star, Trash } from "lucide-react";
+import { RotateCcw, Star, Trash } from "lucide-react";
 import { handleDeleteNote, handleFav } from "./handleNotes";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const ShowNotes = ({ notes }) => {
+    const router = useRouter();
+    const handleDelete = async (id, initial) => {
+        handleDeleteNote(id, initial);
+        if (initial == false) {
+            toast({ title: "Note trashed." });
+        } else {
+            toast({ title: "Note restored." });
+        }
+        router.refresh();
+    }
+    const handleFavv = async (id, initial) => {
+        handleFav(id, initial);
+        if (initial == false) {
+            toast({ title: "Note added to favourite." });
+        } else {
+            toast({ title: "Note removed from favourite." });
+        }
+        router.refresh();
+    }
     return (
         <div>
             {notes && notes.map((note) => {
@@ -25,8 +46,8 @@ const ShowNotes = ({ notes }) => {
                                     {note.body}
                                 </p>
                                 <div className="flex items-center justify-start gap-4">
-                                    <Button variant="destructive" onClick={() => { handleDeleteNote(note.id,note.trash) }}><Trash /></Button>
-                                    <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFav(note.id, note.fav) }}><Star /></Button>
+                                    <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>
+                                    <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFavv(note.id, note.fav) }}><Star /></Button>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import ShowNotes from "./showNotes"
 import { getFavNotes } from "./handleNotes"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export async function ShowFavNotes() {
     const notes = await getFavNotes();
@@ -26,9 +27,9 @@ export async function ShowFavNotes() {
                         Your favourite notes.
                     </DialogDescription>
                 </DialogHeader>
-                <div>
+                <ScrollArea className="h-[400px] w-full rounded-md border p-4">
                     <ShowNotes notes={notes} />
-                </div>
+                </ScrollArea>
                 <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>
                         <Button type="button" variant="secondary">

@@ -9,7 +9,9 @@ const Left = async () => {
             <div className='w-full flex items-center justify-end'>
                 <SetNewLeftDays />
             </div>
-            <ShowTargetDates targetdates={targetdates} />
+            <div className='mx-auto py-6 w-full md:w-2/3'>
+                <ShowTargetDates targetdates={targetdates} />
+            </div>
             {/* <div className='w-full py-4 border-gray-500 rounded-xl'>
                 {targetdates && targetdates.map(row => {
                     return (

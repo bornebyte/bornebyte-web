@@ -1,8 +1,13 @@
 "use server"
 import { sql } from "@vercel/postgres";
 
-export async function getNotifications() {
-    const result = await sql.query("SELECT * FROM notifications ORDER BY created_at DESC LIMIT 20");
+export async function getNotifications(filter) {
+    let result = []
+    if (filter === "*") {
+        result = await sql.query("SELECT * FROM notifications ORDER BY created_at DESC LIMIT 40");
+    } else {
+        result = await sql.query(`SELECT * FROM notifications where category='${filter}' ORDER BY created_at DESC LIMIT 40`);
+    }
     let obj = [];
     let categorySet = new Set();
     let labelSet = new Set();
@@ -10,10 +15,12 @@ export async function getNotifications() {
         categorySet.add(row.category);
         labelSet.add(row.label);
     })
+    obj.push({category:"*"})
     for (let category of categorySet) {
         obj.push({ category: category })
     }
-    let c = 0;
+    let c = 1;
+    obj[0].label = "All"
     for (let label of labelSet) {
         obj[c].label = label;
         c++;

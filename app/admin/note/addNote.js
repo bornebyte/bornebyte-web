@@ -14,10 +14,22 @@ import { Label } from "@/components/ui/label"
 import { useRef } from "react"
 import { handleSaveNewNote } from "./handleNotes"
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function AddNote() {
+    const router = useRouter();
     const titleRef = useRef("")
     const bodyRef = useRef("")
+    const handleSave = async () => {
+        await handleSaveNewNote(titleRef.current.value, bodyRef.current.value)
+        titleRef.current.value = ""
+        bodyRef.current.value = ""
+        toast({
+            title: "Note saved successfully!"
+        })
+        router.refresh();
+    }
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -41,11 +53,11 @@ export function AddNote() {
                         <Label htmlFor="body" className="text-right">
                             Body
                         </Label>
-                        <Textarea rows="5" placeholder="Your thoughts here." className="col-span-3"  ref={bodyRef} />
+                        <Textarea rows="5" placeholder="Your thoughts here." className="col-span-3" ref={bodyRef} />
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit" onClick={() => { handleSaveNewNote(titleRef.current.value, bodyRef.current.value) }}>Save</Button>
+                    <Button type="submit" onClick={handleSave}>Save</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

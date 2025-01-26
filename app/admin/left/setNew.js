@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/popover"
 import { addTargetDays } from "./action"
 import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
 
 const FormSchema = z.object({
     targetdate: z.date({
@@ -35,6 +36,7 @@ const FormSchema = z.object({
 
 
 export default function SetNewLeftDays() {
+    const router = useRouter()
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -56,6 +58,7 @@ export default function SetNewLeftDays() {
                 status: "error",
             });
         }
+        router.refresh();
     }
 
     return (

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import ShowNotes from "./showNotes"
 import { getTrashedNotes } from "./handleNotes"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export async function ShowTrashedNotes() {
     const notes = await getTrashedNotes();
@@ -28,9 +29,9 @@ export async function ShowTrashedNotes() {
                         All the trashed notes are shown below.
                     </DialogDescription>
                 </DialogHeader>
-                <div>
+                <ScrollArea className="h-[400px] w-full rounded-md border p-4">
                     <ShowNotes notes={notes} />
-                </div>
+                </ScrollArea>
                 <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>
                         <Button type="button" variant="secondary">

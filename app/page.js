@@ -1,8 +1,9 @@
+import Hero from "./Hero";
 
 export default function Home() {
   return (
     <div>
-      <p>Under Development!!</p>
+      <Hero />
     </div>
   );
 }

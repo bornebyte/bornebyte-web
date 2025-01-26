@@ -1,8 +1,11 @@
+import { ChartComponent } from "./Chart"
+import { handleNotesChartData } from "./note/handleNotes"
 
-const AdminMainPageComponent = () => {
+const AdminMainPageComponent = async () => {
+  const res = await handleNotesChartData()
   return (
     <div>
-      Admin
+      <ChartComponent chartData={res} />
     </div>
 
   )

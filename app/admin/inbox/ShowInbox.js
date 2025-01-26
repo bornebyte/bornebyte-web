@@ -6,10 +6,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useEffect, useState } from "react";
+import { getNotifications } from "./action";
+import ShowInboxMessages from "./ShowData";
 
 const ShowInbox = ({ result, filter }) => {
-    const handleFilter = (e) => {
-        console.log(e);
+    const [data, setdata] = useState(result);
+
+    const handleFilter = async (e) => {
+        if (e === "*") {
+            const result = await getNotifications("*");
+            setdata(result[0]);
+        }
+        const result = await getNotifications(e);
+        setdata(result[0]);
     }
     return (
         <div>
@@ -31,14 +41,15 @@ const ShowInbox = ({ result, filter }) => {
                         </SelectContent>
                     </Select>
                 </div>
-                {
-                    result && result.map((notification) => {
+                {/* {
+                    data && data.map((notification) => {
                         return <div key={notification.id} className="h-full w-full my-4">
                             <p className="text-sm">{notification.created_at}</p>
                             <p className="text-2xl">{notification.title}</p>
                         </div>
                     })
-                }
+                } */}
+                <ShowInboxMessages data={data} />
             </div>
         </div>
     )
