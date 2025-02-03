@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
@@ -24,8 +25,8 @@ export function AddNote({ icon, noteid, title, body }) {
     const bodyRef = useRef("")
     const handleSave = async () => {
         await handleSaveNewNote(titleRef.current.value, bodyRef.current.value)
-        titleRef.current.value = ""
-        bodyRef.current.value = ""
+        // titleRef.current.value = ""
+        // bodyRef.current.value = ""
         toast({
             title: "Note saved successfully!"
         })
@@ -33,8 +34,8 @@ export function AddNote({ icon, noteid, title, body }) {
     }
     const handleUpdatee = async () => {
         let resid = await handleUpdateNote(noteid, titleRef.current.value, bodyRef.current.value)
-        titleRef.current.value = ""
-        bodyRef.current.value = ""
+        // titleRef.current.value = ""
+        // bodyRef.current.value = ""
         if (resid === true) {
             toast({
                 title: "Note updated successfully!"
@@ -77,10 +78,12 @@ export function AddNote({ icon, noteid, title, body }) {
                     </div>
                 </div>
                 <DialogFooter>
-                    {
-                        icon && icon === "SquarePen" ? <Button type="submit" onClick={handleUpdatee}>Update</Button> :
-                            <Button type="submit" onClick={handleSave}>Save</Button>
-                    }
+                    <DialogClose asChild>
+                        {
+                            icon && icon === "SquarePen" ? <Button type="submit" onClick={handleUpdatee}>Update</Button> :
+                                <Button type="submit" onClick={handleSave}>Save</Button>
+                        }
+                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
