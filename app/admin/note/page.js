@@ -11,10 +11,10 @@ const Note = async () => {
       <div className="w-full flex items-center justify-end gap-2">
         <ShowFavNotes />
         <ShowTrashedNotes />
-        <AddNote />
+        <AddNote icon={""} />
       </div>
       <div className="mx-auto py-6 w-full md:w-2/3">
-        <ShowNotes notes={notes} />
+        <ShowNotes notes={notes} noteid={null} />
       </div>
     </div>
   )

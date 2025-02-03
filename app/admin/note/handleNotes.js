@@ -11,6 +11,16 @@ export async function getNotes() {
     }
 }
 
+export async function getNoteByID(id) {
+    try {
+        const result = await sql`SELECT * FROM notes where trash=FALSE,id=${id} ORDER BY id DESC`;
+        return result.rows;
+    } catch (error) {
+        console.error('Error fetching notes by id:', error);
+        return [];
+    }
+}
+
 export async function getTrashedNotes() {
     try {
         const result = await sql`SELECT * FROM notes ORDER BY created_at ASC`;
@@ -35,13 +45,28 @@ export async function getFavNotes() {
     }
 }
 
+export const handleUpdateNote = async (id, title, body) => {
+    try {
+        const date = new Date().toLocaleString()
+        const res = await sql.query(`update notes set title='${title}',body='${body}',lastupdated='${date}' where id=${id} returning id`);
+        const updatedID = res.rows[0].id;
+        await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note Updated with id ${updatedID}', '${date}','noteupdated','Note updated')`);
+        if (updatedID) {
+            return true;
+        }
+    } catch (error) {
+        console.log("Handle Update Note function :",error.message);
+        return null;
+    }
+}
+
 export const handleSaveNewNote = async (title, body) => {
     try {
         const date = new Date().toLocaleString()
         const res = await sql.query(`INSERT INTO notes (title, body, category, created_at, lastupdated) VALUES ('${title}', '${body}', 'Null', '${date}', 'null') returning id`);
         const insertedID = res.rows[0].id
         await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note Added with id ${insertedID}', '${date}','noteadded','Note added')`);
-        if (res.rows[0].id) {
+        if (insertedID) {
             return true;
         }
     } catch (error) {

@@ -10,6 +10,7 @@ import { RotateCcw, Star, Trash } from "lucide-react";
 import { handleDeleteNote, handleFav } from "./handleNotes";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { AddNote } from "./addNote";
 
 const ShowNotes = ({ notes }) => {
     const router = useRouter();
@@ -48,6 +49,8 @@ const ShowNotes = ({ notes }) => {
                                 <div className="flex items-center justify-start gap-4">
                                     <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>
                                     <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFavv(note.id, note.fav) }}><Star /></Button>
+                                    {/* <Button className={"bg-transparent text-white hover:text-black"} onClick={() => { handleUpdatee(note.id) }}><SquarePen /></Button> */}
+                                    <AddNote icon={"SquarePen"} noteid={note.id} title={note.title} body={note.body} />
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
