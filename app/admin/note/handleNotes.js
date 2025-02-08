@@ -4,6 +4,10 @@ const { sql } = require("@vercel/postgres");
 export async function getNotes() {
     try {
         const result = await sql`SELECT * FROM notes where trash=FALSE ORDER BY id DESC`;
+        result.rows.map((row)=>{
+            row.title = row.title.replaceAll("&apos;","'");
+            row.body = row.body.replaceAll("&apos;","'");
+        })
         return result.rows;
     } catch (error) {
         console.error('Error fetching notes:', error);
@@ -11,24 +15,14 @@ export async function getNotes() {
     }
 }
 
-export async function getNoteByID(id) {
-    try {
-        const result = await sql`SELECT * FROM notes where trash=FALSE,id=${id} ORDER BY id DESC`;
-        return result.rows;
-    } catch (error) {
-        console.error('Error fetching notes by id:', error);
-        return [];
-    }
-}
-
 export async function getTrashedNotes() {
     try {
-        const result = await sql`SELECT * FROM notes ORDER BY created_at ASC`;
-        return result.rows.map((row) => {
-            if (row.trash) {
-                return row
-            }
-        });
+        const result = await sql`SELECT * FROM notes where trash=TRUE ORDER BY created_at ASC`;
+        result.rows.map((row)=>{
+            row.title = row.title.replaceAll("&apos;","'");
+            row.body = row.body.replaceAll("&apos;","'");
+        })
+        return result.rows
     } catch (error) {
         console.error('Error fetching notes:', error);
         return [];
@@ -38,6 +32,10 @@ export async function getTrashedNotes() {
 export async function getFavNotes() {
     try {
         const result = await sql`SELECT * FROM notes where fav=TRUE and trash=FALSE ORDER BY created_at ASC`;
+        result.rows.map((row)=>{
+            row.title = row.title.replaceAll("&apos;","'");
+            row.body = row.body.replaceAll("&apos;","'");
+        })
         return result.rows
     } catch (error) {
         console.error('Error fetching notes:', error);
@@ -47,6 +45,8 @@ export async function getFavNotes() {
 
 export const handleUpdateNote = async (id, title, body) => {
     try {
+        title = title.replaceAll("'", "&apos;");
+        body = body.replaceAll("'", "&apos;");
         const date = new Date().toLocaleString()
         const res = await sql.query(`update notes set title='${title}',body='${body}',lastupdated='${date}' where id=${id} returning id`);
         const updatedID = res.rows[0].id;
@@ -55,13 +55,15 @@ export const handleUpdateNote = async (id, title, body) => {
             return true;
         }
     } catch (error) {
-        console.log("Handle Update Note function :",error.message);
+        console.log("Handle Update Note function :", error.message);
         return null;
     }
 }
 
 export const handleSaveNewNote = async (title, body) => {
     try {
+        title = title.replaceAll("'", "&apos;");
+        body = body.replaceAll("'", "&apos;");
         const date = new Date().toLocaleString()
         const res = await sql.query(`INSERT INTO notes (title, body, category, created_at, lastupdated) VALUES ('${title}', '${body}', 'Null', '${date}', 'null') returning id`);
         const insertedID = res.rows[0].id

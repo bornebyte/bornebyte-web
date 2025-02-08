@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { login } from "@/app/auth/actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 export function LoginForm() {
     const [state, loginAction] = useActionState(login, undefined);
@@ -32,7 +33,7 @@ function SubmitButton() {
 
     return (
         <Button disabled={pending} type="submit">
-            Login
+            {pending ? <Loader2 className="animate-spin" /> : ""} Login
         </Button>
     );
 }
