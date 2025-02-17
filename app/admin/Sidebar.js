@@ -18,7 +18,7 @@ const Sidebar = () => {
                     <Link href={"/admin"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Home /> Home</Link>
                     <Link href={"/admin/inbox"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Inbox />Inbox</Link>
                     <Link href={"/admin/note"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <NotebookPen /> Notes</Link>
-                    <Link href={"/admin/left"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Tally5 />Left</Link>
+                    <Link href={"/admin/left"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Tally5 />Target</Link>
                     <Link href={"/admin/settings"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Settings />Settings</Link>
                 </div>
             </div>

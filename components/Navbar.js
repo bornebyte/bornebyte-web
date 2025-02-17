@@ -10,7 +10,7 @@ export default async function Navbar() {
         <header className="h-20 w-full flex items-center justify-between px-6 py-4">
             <Link href="/" className="lg:flex lg:items-center lg:justify-center lg:gap-4" prefetch={false}>
                 <MountainIcon className="h-6 w-6" />
-                <span>Bornebyte</span>
+                <span className="font-bold">Bornebyte</span>
             </Link>
             <nav className="ml-auto lg:flex gap-6">
                 {/* <Link
