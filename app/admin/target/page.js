@@ -2,7 +2,7 @@ import { getTargetDays } from './action'
 import SetNewLeftDays from './setNew'
 import ShowTargetDates from './ShowTargetDates'
 
-const Left = async () => {
+const TargetDates = async () => {
     const targetdates = await getTargetDays();
     return (
         <div className='space-y-4'>
@@ -32,4 +32,4 @@ const Left = async () => {
     )
 }
 
-export default Left
+export default TargetDates
