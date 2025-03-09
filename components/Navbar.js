@@ -20,7 +20,7 @@ export default async function Navbar() {
                     Admin
                 </Link>
                 {
-                    isLoggedIn && <div onClick={logout} className="cursor-pointer hover:text-gray-400">Logout</div>
+                    isLoggedIn && <Button onClick={logout}>Logout</Button>
                 }
             </nav>
         </header>

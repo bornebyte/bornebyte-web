@@ -28,7 +28,7 @@ const Contact = () => {
     return (
         <div className="h-full w-full flex items-center justify-center">
             <form action={sendMessageLocalFunc} className="flex lg:w-2/3 md:w-1/2 w-full mx-4 p-2 flex-col gap-4">
-                <p className="text-center font-bold text-3xl mb-4">Send Message</p>
+                <p className="text-center font-bold text-3xl mb-4">Contact Me</p>
                 <div className="flex flex-col gap-4">
                     <div className="flex gap-4 flex-col md:flex-row">
                         <Input
