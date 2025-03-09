@@ -47,7 +47,7 @@ export const handleUpdateNote = async (id, title, body) => {
     try {
         title = title.replaceAll("'", "&apos;");
         body = body.replaceAll("'", "&apos;");
-        const date = new Date().toLocaleString()
+        const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
         const res = await sql.query(`update notes set title='${title}',body='${body}',lastupdated='${date}' where id=${id} returning id`);
         const updatedID = res.rows[0].id;
         await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note Updated with id ${updatedID}', '${date}','noteupdated','Note updated')`);
@@ -64,7 +64,7 @@ export const handleSaveNewNote = async (title, body) => {
     try {
         title = title.replaceAll("'", "&apos;");
         body = body.replaceAll("'", "&apos;");
-        const date = new Date().toLocaleString()
+        const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
         const res = await sql.query(`INSERT INTO notes (title, body, category, created_at, lastupdated) VALUES ('${title}', '${body}', 'Null', '${date}', 'null') returning id`);
         const insertedID = res.rows[0].id
         await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note Added with id ${insertedID}', '${date}','noteadded','Note added')`);
@@ -82,12 +82,12 @@ export const handleDeleteNote = async (id, initial) => {
         if (!initial) {
             const res = await sql.query(`update notes set trash='true' WHERE id = ${id} returning id`);
             const deletedID = res.rows[0].id
-            const date = new Date().toLocaleString()
+            const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
             await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note trashed with id ${deletedID}', '${date}','notetrashed','Note trashed')`);
         } else {
             const res = await sql.query(`update notes set trash='false' WHERE id = ${id} returning id`);
             const deletedID = res.rows[0].id
-            const date = new Date().toLocaleString()
+            const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
             await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note recovered with id ${deletedID}', '${date}','notedrecovered','Note recovered')`);
         }
     } catch (error) {
@@ -100,12 +100,12 @@ export const handleFav = async (id, initial) => {
         if (!initial) {
             const res = await sql.query(`update notes set fav='true' WHERE id = ${id} returning id`);
             const deletedID = res.rows[0].id
-            const date = new Date().toLocaleString()
+            const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
             await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note added to favourite with id ${deletedID}', '${date}','noteaddedfav','Note Added Favoutite')`);
         } else {
             const res = await sql.query(`update notes set fav='false' WHERE id = ${id} returning id`);
             const deletedID = res.rows[0].id
-            const date = new Date().toLocaleString()
+            const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
             await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Note removed from favourite with id ${deletedID}', '${date}','noteremovedfav','Note Removed Favoutite')`);
         }
     } catch (error) {

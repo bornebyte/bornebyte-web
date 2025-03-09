@@ -3,7 +3,7 @@ import { sql } from "@vercel/postgres";
 
 export const addTargetDays = async (propsDate, propMessage) => {
     try {
-        const today = new Date().toLocaleString();
+        const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
         const res = await sql.query(`insert into targetdate (date, created_at, message) values ('${propsDate.toLocaleDateString()}', '${today}','${propMessage}') returning id`)
         return res.rows[0].id;
     } catch (error) {
