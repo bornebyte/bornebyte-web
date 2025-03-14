@@ -11,6 +11,7 @@ import { handleDeleteNote, handleFav } from "./handleNotes";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { AddNote } from "./addNote";
+import MarkDown from "./MarkDown";
 
 const ShowNotes = ({ notes }) => {
     const router = useRouter();
@@ -43,13 +44,13 @@ const ShowNotes = ({ notes }) => {
                                 <p className="text-gray-400 text-sm">
                                     {note.created_at}
                                 </p>
-                                <p className="py-2">
+                                {/* <p className="py-2">
                                     {note.body}
-                                </p>
+                                </p> */}
+                                <MarkDown note={note} />
                                 <div className="flex items-center justify-start gap-4">
                                     <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>
                                     <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFavv(note.id, note.fav) }}><Star /></Button>
-                                    {/* <Button className={"bg-transparent text-white hover:text-black"} onClick={() => { handleUpdatee(note.id) }}><SquarePen /></Button> */}
                                     <AddNote icon={"SquarePen"} noteid={note.id} title={note.title} body={note.body} />
                                 </div>
                             </AccordionContent>
