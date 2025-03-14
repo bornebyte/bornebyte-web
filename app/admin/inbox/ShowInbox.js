@@ -6,7 +6,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getNotifications } from "./action";
 import ShowInboxMessages from "./ShowData";
 

@@ -63,9 +63,6 @@ const ShowNotes = ({ notes }) => {
                                 <p className="text-gray-400 text-sm">
                                     {note.shareid}
                                 </p>
-                                {/* <p className="py-2">
-                                    {note.body}
-                                </p> */}
                                 <MarkDown note={note} />
                                 <div className="flex items-center justify-start gap-4">
                                     <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>

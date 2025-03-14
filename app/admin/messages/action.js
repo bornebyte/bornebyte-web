@@ -13,3 +13,19 @@ export const getMessages = async () => {
         };
     }
 }
+
+export const handleMarkReadFunc = async (id) => {
+    try {
+        await sql`update messages set read=true where id=${id}`;
+        return {
+            message: "Message marked as read",
+            success: true
+        };
+    } catch (error) {
+        console.error("Error saving message (app/admin/messages/action.js[GetMessages Function]):", error);
+        return {
+            message: "Error getting message",
+            success: false
+        };
+    }
+}

@@ -1,10 +1,13 @@
+import { getMessages } from "./messages/action";
 import Sidebar from "./Sidebar";
 
-export default function AdminLayout({ children }) {
+export default async function AdminLayout({ children }) {
+    const messages = await getMessages()
+      const unreadMessagesCount = messages.filter((i) => i.read === false).length
     return (
         <main>
             <div className="w-full flex justify-end mb-4">
-                <Sidebar />
+                <Sidebar unreadMessagesCount={unreadMessagesCount} />
             </div>
             {children}
         </main>
