@@ -4,9 +4,9 @@ const { sql } = require("@vercel/postgres");
 export async function getNotes() {
     try {
         const result = await sql`SELECT * FROM notes where trash=FALSE ORDER BY id DESC`;
-        result.rows.map((row)=>{
-            row.title = row.title.replaceAll("&apos;","'");
-            row.body = row.body.replaceAll("&apos;","'");
+        result.rows.map((row) => {
+            row.title = row.title.replaceAll("&apos;", "'");
+            row.body = row.body.replaceAll("&apos;", "'");
         })
         return result.rows;
     } catch (error) {
@@ -15,12 +15,26 @@ export async function getNotes() {
     }
 }
 
+export async function getSharedNotes(shareid) {
+    try {
+        const result = await sql`SELECT * FROM notes where trash=FALSE and shareid=${shareid}`;
+        result.rows.map((row) => {
+            row.title = row.title.replaceAll("&apos;", "'");
+            row.body = row.body.replaceAll("&apos;", "'");
+        })
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error fetching shared notes:', error);
+        return [];
+    }
+}
+
 export async function getTrashedNotes() {
     try {
         const result = await sql`SELECT * FROM notes where trash=TRUE ORDER BY created_at ASC`;
-        result.rows.map((row)=>{
-            row.title = row.title.replaceAll("&apos;","'");
-            row.body = row.body.replaceAll("&apos;","'");
+        result.rows.map((row) => {
+            row.title = row.title.replaceAll("&apos;", "'");
+            row.body = row.body.replaceAll("&apos;", "'");
         })
         return result.rows
     } catch (error) {
@@ -32,9 +46,9 @@ export async function getTrashedNotes() {
 export async function getFavNotes() {
     try {
         const result = await sql`SELECT * FROM notes where fav=TRUE and trash=FALSE ORDER BY created_at ASC`;
-        result.rows.map((row)=>{
-            row.title = row.title.replaceAll("&apos;","'");
-            row.body = row.body.replaceAll("&apos;","'");
+        result.rows.map((row) => {
+            row.title = row.title.replaceAll("&apos;", "'");
+            row.body = row.body.replaceAll("&apos;", "'");
         })
         return result.rows
     } catch (error) {
@@ -110,6 +124,19 @@ export const handleFav = async (id, initial) => {
         }
     } catch (error) {
         console.log(error.message);
+    }
+}
+export const handleGenShareIDFunc = async (id) => {
+    try {
+        let shareid = Date.now().toString(36);
+        const res = await sql.query(`update notes set shareid='${shareid}' WHERE id = ${id} returning shareid`);
+        const shareID = res.rows[0].shareid
+        const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+        await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Share id created with id ${shareID}', '${date}','shareidcreated','Share ID Created')`);
+        return shareID;
+    } catch (error) {
+        console.log(error.message);
+        return null;
     }
 }
 

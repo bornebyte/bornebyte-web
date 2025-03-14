@@ -6,12 +6,13 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Star, Trash } from "lucide-react";
-import { handleDeleteNote, handleFav } from "./handleNotes";
+import { RotateCcw, Share, Star, Trash } from "lucide-react";
+import { handleDeleteNote, handleFav, handleGenShareIDFunc } from "./handleNotes";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { AddNote } from "./addNote";
 import MarkDown from "./MarkDown";
+import { ToastAction } from "@/components/ui/toast";
 
 const ShowNotes = ({ notes }) => {
     const router = useRouter();
@@ -33,6 +34,21 @@ const ShowNotes = ({ notes }) => {
         }
         router.refresh();
     }
+    const handleGenShareID = async (id) => {
+        const res = await handleGenShareIDFunc(id);
+        if (res != null) {
+            toast({
+                title: "Share ID Generated",
+                description: res,
+                action: (
+                    <ToastAction altText="Copy Share ID" onClick={() => navigator.clipboard.writeText(res)}>Copy</ToastAction>
+                ),
+            });
+        } else {
+            toast({ title: "Error generating share ID." });
+        }
+        router.refresh();
+    }
     return (
         <div>
             {notes && notes.map((note) => {
@@ -44,6 +60,9 @@ const ShowNotes = ({ notes }) => {
                                 <p className="text-gray-400 text-sm">
                                     {note.created_at}
                                 </p>
+                                <p className="text-gray-400 text-sm">
+                                    {note.shareid}
+                                </p>
                                 {/* <p className="py-2">
                                     {note.body}
                                 </p> */}
@@ -52,6 +71,7 @@ const ShowNotes = ({ notes }) => {
                                     <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>
                                     <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFavv(note.id, note.fav) }}><Star /></Button>
                                     <AddNote icon={"SquarePen"} noteid={note.id} title={note.title} body={note.body} />
+                                    <Button className="bg-transparent text-white hover:text-black" onClick={() => { handleGenShareID(note.id) }}><Share /></Button>
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
