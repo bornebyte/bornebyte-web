@@ -1,10 +1,9 @@
 "use client"
-import { Badge } from '@/components/ui/badge';
-import { Home, Inbox, NotebookPen, Settings, Menu, CircleX, Tally5, MessageCircle } from 'lucide-react';
+import { Home, Inbox, NotebookPen, Settings, Menu, CircleX, Tally5 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-const Sidebar = ({unreadMessagesCount}) => {
+const Sidebar = () => {
     const [toggleSidebar, setToggleSidebar] = useState(false);
     return (
         <div className='w-full h-fit flex flex-col items-end mb-6'>
@@ -19,7 +18,6 @@ const Sidebar = ({unreadMessagesCount}) => {
                     <Link href={"/admin"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Home /> Home</Link>
                     <Link href={"/admin/inbox"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <Inbox />Inbox</Link>
                     <Link href={"/admin/note"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <NotebookPen /> Notes</Link>
-                    <Link href={"/admin/messages"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} > <MessageCircle /> Messages <Badge variant={"destructive"}>{unreadMessagesCount}</Badge></Link>
                     <Link href={"/admin/target"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Tally5 />Target</Link>
                     <Link href={"/admin/settings"} className='flex items-center justify-center gap-4 ' onClick={() => { setToggleSidebar(!toggleSidebar) }} ><Settings />Settings</Link>
                 </div>

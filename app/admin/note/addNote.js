@@ -63,19 +63,9 @@ export function AddNote({ icon, noteid, title, body }) {
 
                     </DialogDescription>
                 </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="title" className="text-right">
-                            Title
-                        </Label>
-                        <Input id="title" defaultValue={title} placeholder="Note title here." className="col-span-3" ref={titleRef} />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="body" className="text-right">
-                            Body
-                        </Label>
-                        <Textarea rows="5" defaultValue={body} placeholder="Your thoughts here." className="col-span-3" ref={bodyRef} />
-                    </div>
+                <div className="flex flex-col gap-4 py-4">
+                    <Input id="title" defaultValue={title} placeholder="Note title here." className="col-span-3" ref={titleRef} />
+                    <Textarea rows="10" defaultValue={body} placeholder="Your thoughts here." className="col-span-3" ref={bodyRef} />
                 </div>
                 <DialogFooter>
                     <DialogClose asChild>

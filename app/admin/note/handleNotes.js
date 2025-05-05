@@ -200,3 +200,8 @@ export const handleNotesChartData = async () => {
     })
     return obj;
 }
+
+export const getTotalNotesCount = async () => {
+    const data = await sql.query("select * from notes");
+    return data.rows.length;
+}
