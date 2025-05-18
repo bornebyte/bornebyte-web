@@ -17,7 +17,9 @@ import { handleSaveNewNote, handleUpdateNote } from "./handleNotes"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { SquarePen } from "lucide-react"
+import { SquarePen, Italic, Bold, List } from "lucide-react"
+
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 export function AddNote({ icon, noteid, title, body }) {
     const router = useRouter();
@@ -63,6 +65,13 @@ export function AddNote({ icon, noteid, title, body }) {
 
                     </DialogDescription>
                 </DialogHeader>
+                <div className="flex flex-col gap-4 items-end">
+                    <ToggleGroup type="multiple">
+                        <ToggleGroupItem value="bold"><Bold /></ToggleGroupItem>
+                        <ToggleGroupItem value="italic"><Italic /></ToggleGroupItem>
+                        <ToggleGroupItem value="bullet"><List /></ToggleGroupItem>
+                    </ToggleGroup>
+                </div>
                 <div className="flex flex-col gap-4 py-4">
                     <Input id="title" defaultValue={title} placeholder="Note title here." className="col-span-3" ref={titleRef} />
                     <Textarea rows="10" defaultValue={body} placeholder="Your thoughts here." className="col-span-3" ref={bodyRef} />

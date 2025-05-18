@@ -141,7 +141,7 @@ export const handleGenShareIDFunc = async (id) => {
 }
 
 export const handleNotesChartData = async () => {
-    const data = await sql.query("select * from notes");
+    const data = await sql.query("select * from notes where trash=FALSE");
 
     let obj = [
         { month: "January", count: 0 },
@@ -202,6 +202,6 @@ export const handleNotesChartData = async () => {
 }
 
 export const getTotalNotesCount = async () => {
-    const data = await sql.query("select * from notes");
+    const data = await sql.query("select * from notes where trash=FALSE");
     return data.rows.length;
 }
