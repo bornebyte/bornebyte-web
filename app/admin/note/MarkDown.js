@@ -11,6 +11,7 @@ const formatHTML = (text) => {
     text = text.replace(/^###\s*(.*)$/gm, "<h2>$1</h2>");
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
     text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+    text = text.replace(/__(.*?)__/g, "<u>$1</u>"); // Added underline support
     text = text.replace(/^\*\s?(.*)$/gm, "<li>$1</li>");
     let result = wrapListItemsWithUl(text);
     text = text
