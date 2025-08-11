@@ -15,6 +15,22 @@ export async function getNotes() {
     }
 }
 
+export async function getSearchNotes(query) {
+    try {
+        query = query.replaceAll("'", "&apos;");
+        console.log("Searching for:", query);
+        const result = await sql`SELECT * FROM notes WHERE (title ILIKE ${'%' + query + '%'} OR body ILIKE ${'%' + query + '%'}) AND trash=FALSE ORDER BY id DESC`;
+        result.rows.map((row) => {
+            row.title = row.title.replaceAll("&apos;", "'");
+            row.body = row.body.replaceAll("&apos;", "'");  
+        })
+        return result.rows;
+    } catch (error) {
+        console.error('Error fetching search notes:', error);
+        return [];
+    }
+}
+
 export async function getSharedNotes(shareid) {
     try {
         const result = await sql`SELECT * FROM notes where trash=FALSE and shareid=${shareid}`;
