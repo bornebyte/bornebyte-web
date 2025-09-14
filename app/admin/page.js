@@ -1,6 +1,7 @@
 import { ChartComponent } from "./Chart";
-// Assuming you have a function to get the total count, maybe in the same file as handleNotesChartData
 import { handleNotesChartData, getTotalNotesCount } from "./note/handleNotes";
+import { AttendanceCalendar } from "./calendar/AttendanceCalendar";
+import { BudgetTrackerCalendar } from "./calendar/BudgetTrackerCalendar";
 
 // --- Card Component Definition (from step 1) ---
 const Card = ({ title, value }) => {
@@ -31,6 +32,12 @@ const AdminMainPageComponent = async () => {
          <Card title="Total Notes" value={totalNotes} />
          {/* You could add more cards here */}
          {/* <Card title="Users Online" value={onlineUsers} /> */}
+      </div>
+
+      {/* Calendars */}
+      <div className="flex flex-wrap gap-4">
+        <AttendanceCalendar />
+        <BudgetTrackerCalendar />
       </div>
 
       {/* Chart Component */}
