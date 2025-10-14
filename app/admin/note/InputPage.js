@@ -1,25 +1,20 @@
 "use client"
 import { Input } from "@/components/ui/input"
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { getSearchNotes } from "./handleNotes";
 import ShowNotes from "./showNotes";
 
 const SearchComponent = ({ notes }) => {
     const [searchResults, setSearchResults] = useState(notes);
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        setSearchResults(notes);
-    }, [notes]);
-
     const searchNotes = async () => {
         const query = inputRef.current.value;
-        if (!query) {
-            setSearchResults(notes);
-            return;
-        }
         const res = await getSearchNotes(query);
-        setSearchResults(res);
+        if (res) {
+            setSearchResults(res);
+        } else {
+            setSearchResults(searchResults);
+        }
     }
     return (
         <div>
