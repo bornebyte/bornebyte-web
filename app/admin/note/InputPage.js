@@ -7,18 +7,20 @@ import ShowNotes from "./showNotes";
 const SearchComponent = ({ notes }) => {
     const [searchResults, setSearchResults] = useState(notes);
     const inputRef = useRef(null);
-    const searchNotes = async () => {
-        const query = inputRef.current.value;
-        const res = await getSearchNotes(query);
-        if (res) {
-            setSearchResults(res);
-        } else {
-            setSearchResults(searchResults);
-        }
-    }
+
     useEffect(() => {
         setSearchResults(notes);
-    }, [notes])
+    }, [notes]);
+
+    const searchNotes = async () => {
+        const query = inputRef.current.value;
+        if (!query) {
+            setSearchResults(notes);
+            return;
+        }
+        const res = await getSearchNotes(query);
+        setSearchResults(res);
+    }
     return (
         <div>
             <div className="w-full flex items-center justify-center gap-2 my-4">
