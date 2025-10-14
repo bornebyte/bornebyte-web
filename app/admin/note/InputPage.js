@@ -1,6 +1,6 @@
 "use client"
 import { Input } from "@/components/ui/input"
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getSearchNotes } from "./handleNotes";
 import ShowNotes from "./showNotes";
 
@@ -16,6 +16,9 @@ const SearchComponent = ({ notes }) => {
             setSearchResults(searchResults);
         }
     }
+    useEffect(() => {
+        setSearchResults(notes);
+    }, [notes])
     return (
         <div>
             <div className="w-full flex items-center justify-center gap-2 my-4">
