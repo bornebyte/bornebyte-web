@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProviderComponent } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="lg:mx-20 lg:my-10 mx-2 my-2">
             {children}
+            <SpeedInsights />
           </main>
           <Toaster />
         </ThemeProviderComponent>
