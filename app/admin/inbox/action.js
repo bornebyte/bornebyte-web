@@ -1,7 +1,9 @@
 "use server"
-import { sql } from "@vercel/postgres";
+import { neon } from "@neondatabase/serverless";
+// import { sql } from "@vercel/postgres";
 
 export async function getNotifications(filter) {
+    const sql = neon(process.env.DATABASE_URL);
     let result = []
     if (filter === "*") {
         result = await sql.query("SELECT * FROM notifications ORDER BY created_at DESC LIMIT 40");
@@ -11,7 +13,7 @@ export async function getNotifications(filter) {
     let obj = [];
     let categorySet = new Set();
     let labelSet = new Set();
-    result.rows.forEach(row => {
+    result.forEach(row => {
         categorySet.add(row.category);
         labelSet.add(row.label);
     })
@@ -25,5 +27,5 @@ export async function getNotifications(filter) {
         obj[c].label = label;
         c++;
     }
-    return [result.rows, obj];
+    return [result, obj];
 }
