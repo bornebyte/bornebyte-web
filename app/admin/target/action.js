@@ -1,11 +1,8 @@
 "use server";
 
-import { neon } from "@neondatabase/serverless";
-
-// import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db";
 
 export const addTargetDays = async (propsDate, propMessage) => {
-    const sql = neon(process.env.DATABASE_URL);
     try {
         const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
         const res = await sql.query(`insert into targetdate (date, created_at, message) values ('${propsDate.toLocaleDateString()}', '${today}','${propMessage}') returning id`)
@@ -18,7 +15,6 @@ export const addTargetDays = async (propsDate, propMessage) => {
 }
 
 export const getTargetDays = async () => {
-    const sql = neon(process.env.DATABASE_URL);
     try {
         const res = await sql.query(`SELECT * FROM targetdate`);
         

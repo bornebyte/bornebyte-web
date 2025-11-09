@@ -1,11 +1,8 @@
 "use server"
-
-import { neon } from "@neondatabase/serverless";
-// import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db";
 import { AES } from "crypto-js";
 
 export const handleChangePassword = async (newPassword) => {
-    const sql = neon(process.env.DATABASE_URL);
     const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
     await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Admin Password Changed', '${date}','passwordchange','Password Change')`);
     const encryptedPass = AES.encrypt(newPassword, process.env.SESSION_SECRET).toString()

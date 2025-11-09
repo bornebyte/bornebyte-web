@@ -1,12 +1,8 @@
 "use server"
 
-import { neon } from "@neondatabase/serverless";
-
-// const { sql } = require("@vercel/postgres");
-
+import { sql } from "@/lib/db";
 
 export async function getNotes() {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         const result = await sql`SELECT * FROM notes where trash=FALSE ORDER BY id DESC`;
         result.map((row) => {
@@ -21,7 +17,6 @@ export async function getNotes() {
 }
 
 export async function getSearchNotes(query) {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         query = query.replaceAll("'", "&apos;");
         console.log("Searching for:", query);
@@ -38,7 +33,6 @@ export async function getSearchNotes(query) {
 }
 
 export async function getSharedNotes(shareid) {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         const result = await sql`SELECT * FROM notes where trash=FALSE and shareid=${shareid}`;
         result.map((row) => {
@@ -53,7 +47,6 @@ export async function getSharedNotes(shareid) {
 }
 
 export async function getTrashedNotes() {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         const result = await sql`SELECT * FROM notes where trash=TRUE ORDER BY created_at ASC`;
         result.map((row) => {
@@ -68,7 +61,6 @@ export async function getTrashedNotes() {
 }
 
 export async function getFavNotes() {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         const result = await sql`SELECT * FROM notes where fav=TRUE and trash=FALSE ORDER BY created_at ASC`;
         result.map((row) => {
@@ -83,7 +75,6 @@ export async function getFavNotes() {
 }
 
 export const handleUpdateNote = async (id, title, body) => {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         title = title.replaceAll("'", "&apos;");
         body = body.replaceAll("'", "&apos;");
@@ -101,7 +92,6 @@ export const handleUpdateNote = async (id, title, body) => {
 }
 
 export const handleSaveNewNote = async (title, body) => {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         title = title.replaceAll("'", "&apos;");
         body = body.replaceAll("'", "&apos;");
@@ -119,7 +109,6 @@ export const handleSaveNewNote = async (title, body) => {
 }
 
 export const handleDeleteNote = async (id, initial) => {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         if (!initial) {
             const res = await sql.query(`update notes set trash='true' WHERE id = ${id} returning id`);
@@ -138,7 +127,6 @@ export const handleDeleteNote = async (id, initial) => {
 }
 
 export const handleFav = async (id, initial) => {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         if (!initial) {
             const res = await sql.query(`update notes set fav='true' WHERE id = ${id} returning id`);
@@ -156,7 +144,6 @@ export const handleFav = async (id, initial) => {
     }
 }
 export const handleGenShareIDFunc = async (id) => {
-    const sql = neon(process.env.DATABASE_URL)
     try {
         let shareid = Date.now().toString(36);
         const res = await sql.query(`update notes set shareid='${shareid}' WHERE id = ${id} returning shareid`);
@@ -171,7 +158,6 @@ export const handleGenShareIDFunc = async (id) => {
 }
 
 export const handleNotesChartData = async () => {
-    const sql = neon(process.env.DATABASE_URL)
     const data = await sql.query("select * from notes where trash=FALSE");
 
     let obj = [
@@ -233,7 +219,6 @@ export const handleNotesChartData = async () => {
 }
 
 export const getTotalNotesCount = async () => {
-    const sql = neon(process.env.DATABASE_URL)
     const data = await sql.query("select * from notes where trash=FALSE");
     return data.length;
 }

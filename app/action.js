@@ -1,10 +1,8 @@
 "use server";
-const { sql } = require("@vercel/postgres");
+
+import { sql } from "@/lib/db";
 
 export async function saveMessage(name, email, message) {
-    // let name = formData.get("name")
-    // let email = formData.get("email")
-    // let message = formData.get("message")
     const nepaliTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
     const time = nepaliTime;
     try {
