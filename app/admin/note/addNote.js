@@ -11,7 +11,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useRef } from "react"
 import { handleSaveNewNote, handleUpdateNote } from "./handleNotes"
 import { Textarea } from "@/components/ui/textarea"
@@ -158,8 +157,6 @@ export function AddNote({ icon, noteid, title, body }) {
 
     const handleSave = async () => {
         await handleSaveNewNote(titleRef.current.value, bodyRef.current.value)
-        // titleRef.current.value = ""
-        // bodyRef.current.value = ""
         toast({
             title: "Note saved successfully!"
         })
@@ -167,8 +164,6 @@ export function AddNote({ icon, noteid, title, body }) {
     }
     const handleUpdatee = async () => {
         let resid = await handleUpdateNote(noteid, titleRef.current.value, bodyRef.current.value)
-        // titleRef.current.value = ""
-        // bodyRef.current.value = ""
         if (resid === true) {
             toast({
                 title: "Note updated successfully!"
