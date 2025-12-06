@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function middleware(request) {
+export async function proxy(request) {
     const cookieStore = await cookies()
     const cookie = cookieStore.has("session");
     if (request.nextUrl.pathname.startsWith('/admin') && !cookie) {
