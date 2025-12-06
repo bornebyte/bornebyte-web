@@ -24,7 +24,7 @@ const ShowInbox = ({ result, filter }) => {
     return (
         <div>
             <p className="text-5xl text-center mb-4">Inbox</p>
-            <div className="h-full w-full md:w-2/3 mx-auto rounded-2xl border border-gray-700 px-10 py-8">
+            <div className="h-full w-full md:w-2/3 mx-auto rounded-2xl border border-gray-700 px-6 py-8">
                 <div className="w-full flex items-center justify-end">
                     <Select onValueChange={handleFilter}>
                         <SelectTrigger className="w-[180px]">
@@ -41,14 +41,6 @@ const ShowInbox = ({ result, filter }) => {
                         </SelectContent>
                     </Select>
                 </div>
-                {/* {
-                    data && data.map((notification) => {
-                        return <div key={notification.id} className="h-full w-full my-4">
-                            <p className="text-sm">{notification.created_at}</p>
-                            <p className="text-2xl">{notification.title}</p>
-                        </div>
-                    })
-                } */}
                 <ShowInboxMessages data={data} />
             </div>
         </div>

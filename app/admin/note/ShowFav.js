@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -10,15 +12,14 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import ShowNotes from "./showNotes"
-import { getFavNotes } from "./handleNotes"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Star } from "lucide-react";
 
-export async function ShowFavNotes() {
-    const notes = await getFavNotes();
+export function ShowFavNotes({ notes }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Favourite</Button>
+                <Button variant="outline"><Star /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>

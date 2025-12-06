@@ -1,0 +1,58 @@
+'use client';
+
+import { useState } from 'react';
+import { AddNote } from "./addNote";
+import { ShowTrashedNotes } from "./ShowTrashedNotes";
+import { ShowFavNotes } from "./ShowFav";
+import SearchComponent from "./InputPage";
+import Download from "./Download";
+import { RefreshButton } from "@/components/RefreshButton";
+import { PageTransition, SlideIn } from "@/components/PageTransition";
+import { getNotes, getFavNotes, getTrashedNotes } from "./handleNotes";
+
+export default function NotesClient({ initialNotes, initialFavNotes, initialTrashedNotes }) {
+    const [notes, setNotes] = useState(initialNotes);
+    const [favNotes, setFavNotes] = useState(initialFavNotes);
+    const [trashedNotes, setTrashedNotes] = useState(initialTrashedNotes);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
+    const handleRefresh = async () => {
+        setIsRefreshing(true);
+        try {
+            const [freshNotes, freshFavNotes, freshTrashedNotes] = await Promise.all([
+                getNotes(),
+                getFavNotes(),
+                getTrashedNotes()
+            ]);
+            setNotes(freshNotes);
+            setFavNotes(freshFavNotes);
+            setTrashedNotes(freshTrashedNotes);
+        } catch (error) {
+            console.error('Error refreshing notes:', error);
+        } finally {
+            setIsRefreshing(false);
+        }
+    };
+
+    return (
+        <PageTransition>
+            <div className="space-y-6 p-4">
+                <SlideIn direction="down">
+                    <div className="w-full flex items-center justify-between gap-3 flex-wrap">
+                        <h1 className="text-2xl font-bold">Notes</h1>
+                        <div className="flex items-center gap-3">
+                            <ShowTrashedNotes notes={trashedNotes} />
+                            <ShowFavNotes notes={favNotes} />
+                            <AddNote icon={""} />
+                            <Download notes={notes} />
+                            <RefreshButton onRefresh={handleRefresh} />
+                        </div>
+                    </div>
+                </SlideIn>
+                <SlideIn delay={0.1}>
+                    <SearchComponent notes={notes} key={notes.length} />
+                </SlideIn>
+            </div>
+        </PageTransition>
+    );
+}

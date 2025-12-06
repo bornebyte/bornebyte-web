@@ -16,7 +16,7 @@ import { handleSaveNewNote, handleUpdateNote } from "./handleNotes"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-import { SquarePen, Italic, Bold, List, Underline } from "lucide-react"
+import { SquarePen, Italic, Bold, List, Underline, Plus } from "lucide-react"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -76,10 +76,10 @@ export function AddNote({ icon, noteid, title, body }) {
                         lineEndIndex++;
                     }
                 }
-                
+
                 const affectedText = currentFullText.substring(lineStartIndex, lineEndIndex);
                 const lines = affectedText.split('\n');
-                
+
                 const allLinesAreListItems = lines.every(line => line.startsWith("* ") || line.trim() === "");
 
                 let processedLines = [];
@@ -107,17 +107,17 @@ export function AddNote({ icon, noteid, title, body }) {
                         return line;
                     });
                 }
-                
+
                 const newAffectedText = processedLines.join('\n');
                 newText = currentFullText.substring(0, lineStartIndex) + newAffectedText + currentFullText.substring(lineEndIndex);
-                
-                if(textWasChanged){
+
+                if (textWasChanged) {
                     if (start === end) { // No selection, cursor on a line
                         // Adjust cursor based on whether we added or removed "* "
                         if (allLinesAreListItems) { // Removed
-                             newSelectionStart = Math.max(lineStartIndex, start - 2);
+                            newSelectionStart = Math.max(lineStartIndex, start - 2);
                         } else { // Added
-                             newSelectionStart = start + 2;
+                            newSelectionStart = start + 2;
                         }
                         newSelectionEnd = newSelectionStart;
                     } else { // Selection
@@ -130,7 +130,7 @@ export function AddNote({ icon, noteid, title, body }) {
                     newSelectionStart = start;
                     newSelectionEnd = end;
                 }
-                
+
                 // Ensure selection doesn't go out of bounds
                 newSelectionStart = Math.max(0, Math.min(newText.length, newSelectionStart));
                 newSelectionEnd = Math.max(0, Math.min(newText.length, newSelectionEnd));
@@ -180,7 +180,7 @@ export function AddNote({ icon, noteid, title, body }) {
             <DialogTrigger asChild>
                 {
                     icon && icon === "SquarePen" ? <Button className={"bg-transparent text-white hover:text-black"}><SquarePen /></Button> :
-                        <Button variant="outline">New Note</Button>
+                        <Button variant="outline"><Plus /></Button>
                 }
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

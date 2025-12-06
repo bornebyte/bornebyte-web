@@ -1,25 +1,13 @@
-import { AddNote } from "./addNote";
-import { getNotes } from "./handleNotes";
-import { ShowTrashedNotes } from "./ShowTrashedNotes";
-import { ShowFavNotes } from "./ShowFav";
-import SearchComponent from "./InputPage";
-import Download from "./Download";
+import { getNotes, getFavNotes, getTrashedNotes } from "./handleNotes";
+import NotesClient from "./NotesClient";
 
 const Note = async () => {
-  const notes = await getNotes();
-  return (
-    <div className="space-y-6 p-4">
-      <div className="w-full flex items-center justify-end gap-3">
-        <ShowFavNotes />
-        <ShowTrashedNotes />
-        <AddNote icon={""} />
-        <Download notes={notes} />
-      </div>
-      <div>
-        <SearchComponent notes={notes} />
-      </div>
-    </div>
-  )
+  const [notes, favNotes, trashedNotes] = await Promise.all([
+    getNotes(),
+    getFavNotes(),
+    getTrashedNotes()
+  ]);
+  return <NotesClient initialNotes={notes} initialFavNotes={favNotes} initialTrashedNotes={trashedNotes} />
 }
 
 export default Note

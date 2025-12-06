@@ -1,4 +1,6 @@
-import { Copy } from "lucide-react"
+'use client';
+
+import { Copy, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,15 +14,13 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import ShowNotes from "./showNotes"
-import { getTrashedNotes } from "./handleNotes"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-export async function ShowTrashedNotes() {
-    const notes = await getTrashedNotes();
+export function ShowTrashedNotes({ notes }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Trashed</Button>
+                <Button variant="outline"><Trash /></Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>

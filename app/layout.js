@@ -1,20 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProviderComponent } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster"
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Bornebyte",
@@ -24,9 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-      >
+      <body className="antialiased flex flex-col min-h-screen">
         <ThemeProviderComponent
           attribute="class"
           defaultTheme="system"
@@ -38,7 +24,6 @@ export default function RootLayout({ children }) {
             {children}
             <SpeedInsights />
           </main>
-          <Footer />
           <Toaster />
         </ThemeProviderComponent>
       </body>

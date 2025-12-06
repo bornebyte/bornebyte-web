@@ -1,13 +1,9 @@
 import { getNotifications } from "./action";
-import ShowInbox from "./ShowInbox";
+import InboxClient from "./InboxClient";
 
 const Inbox = async () => {
   const result = await getNotifications("*");
-  return (
-    <div className="p-4">
-      <ShowInbox result={result[0]} filter={result[1]} />
-    </div>
-  )
+  return <InboxClient initialResult={result[0]} initialFilter={result[1]} />;
 }
 
 export default Inbox
