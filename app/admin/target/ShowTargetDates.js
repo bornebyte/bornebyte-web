@@ -15,11 +15,8 @@ const ShowTargetDates = ({ targetdates }) => {
                         <AccordionTrigger>{row.message}</AccordionTrigger>
                         <AccordionContent>
                             <div>
-                                {/* <p>ID: {row.id}</p> */}
                                 <p>Target Date: {row.date} </p>
                                 <p>Created At: {row.created_at} </p>
-                                {/* <p>Message: <span className="text-red-500">{row.message}</span> </p> */}
-                                {/* <p>Months: {row.months} </p> */}
                                 <p><span className="text-red-500"> {row.days} days </span> {row.hours} hours {row.minutes} minutes left.</p>
                                 <Progress value={row.progressPercentage} className="w-[60%] my-4" />
                             </div>

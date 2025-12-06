@@ -23,11 +23,11 @@ export default function TargetClient({ initialTargets }) {
         <PageTransition>
             <div className='space-y-6 p-4'>
                 <SlideIn direction="down">
-                    <div className='w-full flex items-center justify-between'>
+                    <div className='w-full flex flex-wrap gap-4 items-center justify-between'>
                         <h1 className="text-2xl font-bold">Target Dates</h1>
                         <div className="flex items-center gap-3">
-                            <RefreshButton onRefresh={handleRefresh} />
                             <SetNewLeftDays />
+                            <RefreshButton onRefresh={handleRefresh} />
                         </div>
                     </div>
                 </SlideIn>
