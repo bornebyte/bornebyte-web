@@ -5,7 +5,7 @@ import ShowTargetDates from './ShowTargetDates'
 const TargetDates = async () => {
     const targetdates = await getTargetDays();
     return (
-        <div className='space-y-4'>
+        <div className='space-y-6 p-4'>
             <div className='w-full flex items-center justify-end'>
                 <SetNewLeftDays />
             </div>

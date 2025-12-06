@@ -4,11 +4,24 @@ import React from 'react'
 const Hero = () => {
     return (
         <div className='flex lg:flex-row flex-col items-center justify-evenly gap-10 w-full min-h-screen p-4'>
-            <div className=''>
-                <p className="text-6xl font-bold text-center">Bornebyte</p>
-                <p className="text-lg text-gray-600 text-center">A personal website.</p>
+            <div className='animate-fadeIn space-y-4'>
+                <p className="text-6xl font-bold text-center">
+                    Bornebyte
+                </p>
+                <p className="text-lg text-muted-foreground text-center">
+                    A personal website.
+                </p>
             </div>
-            <Image src={"/shubham2.jpg"} alt="Logo" priority width={400} height={400} className='rounded-2xl' />
+            <div className='animate-fadeIn group'>
+                <Image
+                    src={"/shubham2.jpg"}
+                    alt="Logo"
+                    priority
+                    width={400}
+                    height={400}
+                    className='rounded-2xl shadow-lg transition-transform duration-300 group-hover:scale-[1.02]'
+                />
+            </div>
         </div>
     )
 }

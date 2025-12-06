@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { useRef } from "react";
 import { handleChangePassword } from "./handleDB";
 import { toast } from "@/hooks/use-toast";
+import { KeyRound } from "lucide-react";
 
 const SettingsComponent = () => {
   const newPassword = useRef('');
@@ -17,12 +18,30 @@ const SettingsComponent = () => {
     }
   }
   return (
-    <div className="h-full w-full flex flex-col items-center">
-      <div>
-        <p className="font-bold text-xl">Change Password</p>
-        <div className="flex items-center justify-center gap-4 my-2">
-          <Input name="newPassword" type="password" placeholder="New password" ref={newPassword} />
-          <Button onClick={handleChangePass}>Change</Button>
+    <div className="h-full w-full flex flex-col items-center justify-center p-4">
+      <div className="bg-card border rounded-xl p-8 shadow-lg max-w-md w-full">
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <KeyRound className="h-6 w-6" />
+          </div>
+          <p className="font-bold text-2xl">Change Password</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="newPassword" className="text-sm font-medium">New Password</label>
+            <Input
+              id="newPassword"
+              name="newPassword"
+              type="password"
+              placeholder="Enter new password"
+              ref={newPassword}
+            />
+          </div>
+          <Button
+            onClick={handleChangePass}
+          >
+            Update Password
+          </Button>
         </div>
       </div>
     </div>

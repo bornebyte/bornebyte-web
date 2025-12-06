@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProviderComponent } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster"
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -24,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <ThemeProviderComponent
           attribute="class"
@@ -33,10 +34,11 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="lg:mx-20 lg:my-10 mx-2 my-2">
+          <main className="lg:mx-20 lg:my-10 mx-2 my-2 flex-1">
             {children}
             <SpeedInsights />
           </main>
+          <Footer />
           <Toaster />
         </ThemeProviderComponent>
       </body>

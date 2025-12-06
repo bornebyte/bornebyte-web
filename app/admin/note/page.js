@@ -8,14 +8,16 @@ import Download from "./Download";
 const Note = async () => {
   const notes = await getNotes();
   return (
-    <div>
-      <div className="w-full flex items-center justify-end gap-2">
+    <div className="space-y-6 p-4">
+      <div className="w-full flex items-center justify-end gap-3">
         <ShowFavNotes />
         <ShowTrashedNotes />
         <AddNote icon={""} />
         <Download notes={notes} />
       </div>
-      <SearchComponent notes={notes} />
+      <div>
+        <SearchComponent notes={notes} />
+      </div>
     </div>
   )
 }
