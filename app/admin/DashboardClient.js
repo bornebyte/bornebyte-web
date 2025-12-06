@@ -79,9 +79,9 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
 
     return (
         <PageTransition>
-            <div className="p-4 md:p-6 space-y-6">
+            <div className="w-full p-4 md:p-6 space-y-6">
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap gap-3">
                     <div>
                         <h1 className="text-3xl font-bold">Dashboard</h1>
                         <p className="text-muted-foreground">Welcome back! Here's your overview.</p>
@@ -143,22 +143,24 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
                 </div>
 
                 {/* Main Content Grid */}
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
                     {/* Notes Activity Chart */}
-                    <SlideIn delay={0.5} className="md:col-span-2 lg:col-span-1">
+                    <SlideIn delay={0.5} className="min-w-0">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Notes Activity</CardTitle>
                                 <CardDescription>Monthly note creation trends</CardDescription>
                             </CardHeader>
-                            <CardContent>
-                                <ChartComponent chartData={chartData} />
+                            <CardContent className="min-w-0">
+                                <div className="w-full">
+                                    <ChartComponent chartData={chartData} />
+                                </div>
                             </CardContent>
                         </Card>
                     </SlideIn>
 
                     {/* Weekly Productivity */}
-                    <SlideIn delay={0.6} className="md:col-span-2 lg:col-span-1">
+                    <SlideIn delay={0.6} className="min-w-0">
                         <Card>
                             <CardHeader>
                                 <CardTitle>7-Day Activity</CardTitle>
@@ -180,9 +182,9 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
                 </div>
 
                 {/* Bottom Grid */}
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {/* Recent Notes */}
-                    <SlideIn delay={0.7}>
+                    <SlideIn delay={0.7} className="min-w-0">
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
@@ -217,7 +219,7 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
                     </SlideIn>
 
                     {/* Recent Activity */}
-                    <SlideIn delay={0.8}>
+                    <SlideIn delay={0.8} className="min-w-0">
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
@@ -246,7 +248,7 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
                     </SlideIn>
 
                     {/* Upcoming Targets */}
-                    <SlideIn delay={0.9}>
+                    <SlideIn delay={0.9} className="min-w-0">
                         <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center gap-2">
