@@ -20,7 +20,7 @@ import { SquarePen, Italic, Bold, List, Underline, Plus } from "lucide-react"
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-export function AddNote({ icon, noteid, title, body }) {
+export function AddNote({ icon, noteid, title, body, onRefresh }) {
     const router = useRouter();
     const titleRef = useRef(null)
     const bodyRef = useRef(null)
@@ -160,6 +160,7 @@ export function AddNote({ icon, noteid, title, body }) {
         toast({
             title: "Note saved successfully!"
         })
+        if (onRefresh) await onRefresh();
         router.refresh();
     }
     const handleUpdatee = async () => {
@@ -173,6 +174,7 @@ export function AddNote({ icon, noteid, title, body }) {
                 title: "Failed to update note!"
             })
         }
+        if (onRefresh) await onRefresh();
         router.refresh();
     }
     return (

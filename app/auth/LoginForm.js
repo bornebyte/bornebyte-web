@@ -11,8 +11,8 @@ export function LoginForm() {
     const [state, loginAction] = useActionState(login, undefined);
 
     return (
-        <div className="h-full w-full flex items-center justify-center p-4">
-            <form action={loginAction} className="flex lg:w-1/3 md:w-1/2 w-full mx-4 border rounded-xl p-10 flex-col gap-6 shadow-lg bg-card">
+        <div className="h-full w-full flex items-center justify-center px-4 py-32">
+            <form action={loginAction} className="flex lg:w-1/3 md:w-1/2 w-full mx-2 border rounded-xl p-4 flex-col gap-6 shadow-lg bg-card">
                 <div className="flex flex-col items-center gap-4 mb-2">
                     <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
                         <Lock className="h-8 w-8" />

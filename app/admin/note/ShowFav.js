@@ -15,7 +15,7 @@ import ShowNotes from "./showNotes"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Star } from "lucide-react";
 
-export function ShowFavNotes({ notes }) {
+export function ShowFavNotes({ notes, onRefresh }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -29,7 +29,7 @@ export function ShowFavNotes({ notes }) {
                     </DialogDescription>
                 </DialogHeader>
                 <ScrollArea className="h-[400px] w-full rounded-md border p-4">
-                    <ShowNotes notes={notes} />
+                    <ShowNotes notes={notes} onRefresh={onRefresh} />
                 </ScrollArea>
                 <DialogFooter className="sm:justify-end">
                     <DialogClose asChild>

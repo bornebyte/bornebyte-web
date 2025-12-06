@@ -41,16 +41,16 @@ export default function NotesClient({ initialNotes, initialFavNotes, initialTras
                     <div className="w-full flex items-center justify-between gap-3 flex-wrap">
                         <h1 className="text-2xl font-bold">Notes</h1>
                         <div className="flex items-center gap-3">
-                            <ShowTrashedNotes notes={trashedNotes} />
-                            <ShowFavNotes notes={favNotes} />
-                            <AddNote icon={""} />
+                            <ShowTrashedNotes notes={trashedNotes} onRefresh={handleRefresh} />
+                            <ShowFavNotes notes={favNotes} onRefresh={handleRefresh} />
+                            <AddNote icon={""} onRefresh={handleRefresh} />
                             <Download notes={notes} />
                             <RefreshButton onRefresh={handleRefresh} />
                         </div>
                     </div>
                 </SlideIn>
                 <SlideIn delay={0.1}>
-                    <SearchComponent notes={notes} key={notes.length} />
+                    <SearchComponent notes={notes} onRefresh={handleRefresh} key={notes.length} />
                 </SlideIn>
             </div>
         </PageTransition>

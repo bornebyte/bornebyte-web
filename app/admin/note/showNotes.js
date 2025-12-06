@@ -14,7 +14,7 @@ import { AddNote } from "./addNote";
 import MarkDown from "./MarkDown";
 import { ToastAction } from "@/components/ui/toast";
 
-const ShowNotes = ({ notes }) => {
+const ShowNotes = ({ notes, onRefresh }) => {
     const router = useRouter();
     const handleDelete = async (id, initial) => {
         handleDeleteNote(id, initial);
@@ -23,6 +23,7 @@ const ShowNotes = ({ notes }) => {
         } else {
             toast({ title: "Note restored." });
         }
+        if (onRefresh) await onRefresh();
         router.refresh();
     }
     const handleFavv = async (id, initial) => {
@@ -32,6 +33,7 @@ const ShowNotes = ({ notes }) => {
         } else {
             toast({ title: "Note removed from favourite." });
         }
+        if (onRefresh) await onRefresh();
         router.refresh();
     }
     const handleGenShareID = async (id) => {
@@ -47,6 +49,7 @@ const ShowNotes = ({ notes }) => {
         } else {
             toast({ title: "Error generating share ID." });
         }
+        if (onRefresh) await onRefresh();
         router.refresh();
     }
 
@@ -79,7 +82,7 @@ const ShowNotes = ({ notes }) => {
                                 <div className="flex items-center justify-start gap-4">
                                     <Button variant="destructive" onClick={() => { handleDelete(note.id, note.trash) }}>{note.trash ? <RotateCcw /> : <Trash />}</Button>
                                     <Button className={`${note.fav ? 'bg-yellow-500' : 'bg-transparent text-white hover:text-black'}`} onClick={() => { handleFavv(note.id, note.fav) }}><Star /></Button>
-                                    <AddNote icon={"SquarePen"} noteid={note.id} title={note.title} body={note.body} />
+                                    <AddNote icon={"SquarePen"} noteid={note.id} title={note.title} body={note.body} onRefresh={onRefresh} />
                                     <Button className="bg-transparent text-white hover:text-black" onClick={() => { handleGenShareID(note.id) }}><Share /></Button>
                                     <Button className="bg-transparent text-white hover:text-black" onClick={() => { handleCopyShareID(note.shareid) }}><Link /></Button>
                                 </div>

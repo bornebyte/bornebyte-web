@@ -6,7 +6,7 @@ export async function getDashboardStats() {
     try {
         // Fetch data with error handling for optional tables
         const [notes, trashedNotes, favNotes, notifications] = await Promise.all([
-            sql`SELECT * FROM notes WHERE trash=FALSE`,
+            sql`SELECT * FROM notes WHERE trash=FALSE ORDER BY created_at DESC`,
             sql`SELECT * FROM notes WHERE trash=TRUE`,
             sql`SELECT * FROM notes WHERE fav=TRUE AND trash=FALSE`,
             sql`SELECT * FROM notifications ORDER BY created_at DESC LIMIT 10`
@@ -15,7 +15,22 @@ export async function getDashboardStats() {
         // Try to fetch targets, but handle gracefully if table doesn't exist
         let targets = [];
         try {
-            targets = await sql`SELECT * FROM targetdate ORDER BY id DESC LIMIT 5`;
+            const targetData = await sql`SELECT * FROM targetdate ORDER BY date ASC LIMIT 5`;
+
+            // Process targets to calculate remaining days
+            targets = targetData.map(t => {
+                const today = new Date();
+                const targetDate = new Date(t.date);
+                const remainingTime = targetDate - today;
+                const daysLeft = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+
+                return {
+                    id: t.id,
+                    name: t.message || 'Unnamed Target',
+                    targetdate: new Date(t.date).toLocaleDateString(),
+                    leftdays: daysLeft
+                };
+            }).filter(t => t.leftdays >= 0); // Only show upcoming targets
         } catch (error) {
             console.log('Targets table not found, skipping...');
         }
@@ -73,12 +88,7 @@ export async function getDashboardStats() {
                 label: n.label
             })),
             categoryStats,
-            upcomingTargets: targets.map(t => ({
-                id: t.id,
-                name: t.name,
-                leftdays: t.leftdays,
-                targetdate: t.targetdate
-            }))
+            upcomingTargets: targets // Already mapped above with correct structure
         };
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);

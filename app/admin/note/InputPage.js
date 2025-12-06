@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { getSearchNotes } from "./handleNotes";
 import ShowNotes from "./showNotes";
 
-const SearchComponent = ({ notes }) => {
+const SearchComponent = ({ notes, onRefresh }) => {
     const [searchResults, setSearchResults] = useState(notes);
     const inputRef = useRef(null);
 
@@ -27,7 +27,7 @@ const SearchComponent = ({ notes }) => {
                 <Input type="text" onChange={searchNotes} ref={inputRef} placeholder="Search" className="lg:w-[40%] md:w-[60%] w-full" />
             </div>
             <div className="mx-auto py-6 w-full md:w-2/3">
-                <ShowNotes notes={searchResults} noteid={null} />
+                <ShowNotes notes={searchResults} onRefresh={onRefresh} noteid={null} />
             </div>
         </div>
     )
