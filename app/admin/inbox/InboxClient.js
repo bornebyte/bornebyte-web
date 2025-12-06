@@ -1,20 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ShowInbox from "./ShowInbox";
 import { RefreshButton } from "@/components/RefreshButton";
 import { PageTransition, SlideIn } from "@/components/PageTransition";
 import { getNotifications } from "./action";
+import { setCache, getCache } from "@/lib/cache";
 
 export default function InboxClient({ initialResult, initialFilter }) {
     const [result, setResult] = useState(initialResult);
     const [filter, setFilter] = useState(initialFilter);
+
+    // Cache initial data on mount
+    useEffect(() => {
+        setCache('inboxResult', initialResult, 20);
+        setCache('inboxFilter', initialFilter, 20);
+    }, [initialResult, initialFilter]);
 
     const handleRefresh = async () => {
         try {
             const freshData = await getNotifications("*");
             setResult(freshData[0]);
             setFilter(freshData[1]);
+
+            // Update cache
+            setCache('inboxResult', freshData[0], 20);
+            setCache('inboxFilter', freshData[1], 20);
         } catch (error) {
             console.error('Error refreshing inbox:', error);
         }

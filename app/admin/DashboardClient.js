@@ -21,6 +21,7 @@ import { ChartComponent } from "./Chart";
 import { handleNotesChartData } from "./note/handleNotes";
 import { Progress } from "@/components/ui/progress";
 import Link from 'next/link';
+import { setCache, getCache } from "@/lib/cache";
 
 export default function DashboardClient({ initialStats, initialChart, initialActivity, initialProductivity, error: initialError }) {
     const [stats, setStats] = useState(initialStats);
@@ -29,6 +30,14 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
     const [productivity, setProductivity] = useState(initialProductivity);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(initialError);
+
+    // Cache initial data on mount
+    useEffect(() => {
+        if (initialStats) setCache('dashboardStats', initialStats, 15);
+        if (initialChart) setCache('dashboardChart', initialChart, 15);
+        if (initialActivity) setCache('dashboardActivity', initialActivity, 15);
+        if (initialProductivity) setCache('dashboardProductivity', initialProductivity, 15);
+    }, [initialStats, initialChart, initialActivity, initialProductivity]);
 
     const refreshData = async () => {
         setLoading(true);
@@ -40,10 +49,18 @@ export default function DashboardClient({ initialStats, initialChart, initialAct
                 getActivityTimeline(),
                 getProductivityStats()
             ]);
+
+            // Update state
             setStats(newStats);
             setChartData(newChart);
             setActivity(newActivity);
             setProductivity(newProductivity);
+
+            // Update cache
+            setCache('dashboardStats', newStats, 15);
+            setCache('dashboardChart', newChart, 15);
+            setCache('dashboardActivity', newActivity, 15);
+            setCache('dashboardProductivity', newProductivity, 15);
         } catch (err) {
             console.error('Error refreshing dashboard:', err);
             const errorMsg = err.message.includes('EAI_AGAIN') || err.message.includes('fetch failed') || err.message.includes('ETIMEDOUT')

@@ -1,19 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SetNewLeftDays from './setNew';
 import ShowTargetDates from './ShowTargetDates';
 import { RefreshButton } from "@/components/RefreshButton";
 import { PageTransition, SlideIn } from "@/components/PageTransition";
 import { getTargetDays } from './action';
+import { setCache, getCache } from "@/lib/cache";
 
 export default function TargetClient({ initialTargets }) {
     const [targets, setTargets] = useState(initialTargets);
+
+    // Cache initial data on mount
+    useEffect(() => {
+        setCache('targets', initialTargets, 20);
+    }, [initialTargets]);
 
     const handleRefresh = async () => {
         try {
             const freshTargets = await getTargetDays();
             setTargets(freshTargets);
+
+            // Update cache
+            setCache('targets', freshTargets, 20);
         } catch (error) {
             console.error('Error refreshing targets:', error);
         }
