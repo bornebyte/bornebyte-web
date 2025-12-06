@@ -15,7 +15,7 @@ export async function getDashboardStats() {
         // Try to fetch targets, but handle gracefully if table doesn't exist
         let targets = [];
         try {
-            targets = await sql`SELECT * FROM targetdates ORDER BY id DESC LIMIT 5`;
+            targets = await sql`SELECT * FROM targetdate ORDER BY id DESC LIMIT 5`;
         } catch (error) {
             console.log('Targets table not found, skipping...');
         }
